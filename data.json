@@ -1,0 +1,92 @@
+[
+	{
+		"make": "Toyota",
+		"model": "Corolla",
+		"year": 2020,
+		"fuel_type": "Petrol",
+		"mileage": 15000,
+		"transmission": "Automatic",
+		"price": 20000.0
+	},
+	{
+		"make": "Honda",
+		"model": "Civic",
+		"year": 2019,
+		"fuel_type": "Petrol",
+		"mileage": 18000,
+		"transmission": "Manual",
+		"price": 18000.0
+	},
+	{
+		"make": "Ford",
+		"model": "Mustang",
+		"year": 2021,
+		"fuel_type": "Petrol",
+		"mileage": 8000,
+		"transmission": "Automatic",
+		"price": 35000.0
+	},
+	{
+		"make": "Tesla",
+		"model": "Model 3",
+		"year": 2022,
+		"fuel_type": "Electric",
+		"mileage": 12000,
+		"transmission": "Automatic",
+		"price": 45000.0
+	},
+	{
+		"make": "Chevrolet",
+		"model": "Impala",
+		"year": 2018,
+		"fuel_type": "Diesel",
+		"mileage": 22000,
+		"transmission": "Manual",
+		"price": 16000.0
+	},
+	{
+		"make": "BMW",
+		"model": "X5",
+		"year": 2021,
+		"fuel_type": "Diesel",
+		"mileage": 10000,
+		"transmission": "Automatic",
+		"price": 60000.0
+	},
+	{
+		"make": "Audi",
+		"model": "A4",
+		"year": 2020,
+		"fuel_type": "Petrol",
+		"mileage": 14000,
+		"transmission": "Automatic",
+		"price": 30000.0
+	},
+	{
+		"make": "Volkswagen",
+		"model": "Golf",
+		"year": 2019,
+		"fuel_type": "Petrol",
+		"mileage": 16000,
+		"transmission": "Manual",
+		"price": 22000.0
+	},
+	{
+		"make": "Nissan",
+		"model": "Altima",
+		"year": 2017,
+		"fuel_type": "Petrol",
+		"mileage": 25000,
+		"transmission": "Automatic",
+		"price": 15000.0
+	},
+	{
+		"make": "Mercedes-Benz",
+		"model": "C-Class",
+		"year": 2021,
+		"fuel_type": "Petrol",
+		"mileage": 9000,
+		"transmission": "Automatic",
+		"price": 55000.0
+	}
+]
