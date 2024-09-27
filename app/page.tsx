@@ -14,6 +14,12 @@ export default function Home() {
 	const [loading, setLoading] = useState(true);
 	const [vehicleLoading, setVehicleLoading] = useState(false);
 
+	// State variables for filters and search query
+	const [makeFilter, setMakeFilter] = useState("");
+	const [yearFilter, setYearFilter] = useState("");
+	const [fuelTypeFilter, setFuelTypeFilter] = useState("");
+	const [searchQuery, setSearchQuery] = useState("");
+
 	// Fetch vehicles from the API
 	useEffect(() => {
 		async function fetchVehicles() {
@@ -38,6 +44,51 @@ export default function Home() {
 		}, 500); // Added a delay of 0.5 seconds so that the loading spinner is visible
 	};
 
+	//  Function to get unique values for a key in the vehicles array
+	const getUniqueValues = (key: keyof Vehicle) => {
+		return Array.from(new Set(vehicles.map((vehicle) => vehicle[key])))
+			.filter(Boolean)
+			.sort((a, b) => {
+				if (typeof a === "string" && typeof b === "string") {
+					return a.localeCompare(b);
+				}
+				if (typeof a === "number" && typeof b === "number") {
+					return a - b;
+				}
+				return 0;
+			});
+	};
+
+	//  Filter vehicles based on search query and filters
+	const filteredVehicles = vehicles.filter((vehicle) => {
+		const matchesSearchQuery =
+			vehicle.make.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			vehicle.model.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			vehicle.year.toString().includes(searchQuery) ||
+			vehicle.fuel_type.toLowerCase().includes(searchQuery.toLowerCase());
+
+		return (
+			matchesSearchQuery &&
+			(makeFilter === "" || vehicle.make === makeFilter) &&
+			(yearFilter === "" || vehicle.year.toString() === yearFilter) &&
+			(fuelTypeFilter === "" || vehicle.fuel_type === fuelTypeFilter)
+		);
+	});
+
+	//  Function to clear all filters
+	const clearFilters = () => {
+		setMakeFilter("");
+		setYearFilter("");
+		setFuelTypeFilter("");
+		setSearchQuery("");
+	};
+
+	// Clear selected vehicle if no matches are found
+	useEffect(() => {
+		if (filteredVehicles.length === 0) {
+			setSelectedVehicle(null);
+		}
+	}, [filteredVehicles]);
 
 	return (
 		<div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -60,6 +111,68 @@ export default function Home() {
 			</header>
 			<main className="flex flex-col gap-5 row-start-2 items-center sm:items-start w-full ">
 				<h1 className="text-2xl font-bold ">Vehicle List</h1>
+				<div className="w-full ">
+					<input
+						type="text"
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+						placeholder="Search by make, model, year, or fuel type"
+						className="w-full p-2 border border-gray-300 rounded"
+					/>
+				</div>
+				<div className="flex flex-col sm:flex-row gap-4 mb-4 w-full">
+					<select
+						value={makeFilter}
+						onChange={(e) => setMakeFilter(e.target.value)}
+						className="p-2 border border-gray-300 rounded w-full sm:w-auto"
+					>
+						<option>Filter by make</option>
+						{getUniqueValues("make").map((make) => (
+							<option
+								key={make}
+								value={make}
+							>
+								{make}
+							</option>
+						))}
+					</select>
+					<select
+						value={yearFilter}
+						onChange={(e) => setYearFilter(e.target.value)}
+						className="p-2 border border-gray-300 rounded w-full sm:w-auto"
+					>
+						<option>Filter by year</option>
+						{getUniqueValues("year").map((year) => (
+							<option
+								key={year}
+								value={year.toString()}
+							>
+								{year}
+							</option>
+						))}
+					</select>
+					<select
+						value={fuelTypeFilter}
+						onChange={(e) => setFuelTypeFilter(e.target.value)}
+						className="p-2 border border-gray-300 rounded w-full sm:w-auto"
+					>
+						<option>Filter by fuel type</option>
+						{getUniqueValues("fuel_type").map((fuelType) => (
+							<option
+								key={fuelType}
+								value={fuelType}
+							>
+								{fuelType}
+							</option>
+						))}
+					</select>
+					<button
+						onClick={clearFilters}
+						className="p-2 border border-gray-300 rounded bg-red-500 text-white w-full sm:w-auto"
+					>
+						Clear Filters
+					</button>
+				</div>
 				{loading ? (
 					<LoadingSpinner />
 				) : (
