@@ -35,6 +35,7 @@ export default function Home() {
 
 	// Fetch vehicle details when a vehicle is clicked
 	const handleVehicleClick = async (id: number) => {
+		setSelectedVehicle(null);
 		setVehicleLoading(true);
 		const response = await fetch(`/api/vehicles/${id}`);
 		const data = await response.json();
@@ -75,20 +76,19 @@ export default function Home() {
 		);
 	});
 
-	//  Function to clear all filters
+	// Clear selected vehicle if filters or search query change
+	useEffect(() => {
+		setSelectedVehicle(null);
+	}, [makeFilter, yearFilter, fuelTypeFilter, searchQuery]);
+
+	// Function to clear all filters
 	const clearFilters = () => {
 		setMakeFilter("");
 		setYearFilter("");
 		setFuelTypeFilter("");
 		setSearchQuery("");
+		setSelectedVehicle(null); // Clear selected vehicle when filters are cleared
 	};
-
-	// Clear selected vehicle if no matches are found
-	useEffect(() => {
-		if (filteredVehicles.length === 0) {
-			setSelectedVehicle(null);
-		}
-	}, [filteredVehicles]);
 
 	return (
 		<div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
